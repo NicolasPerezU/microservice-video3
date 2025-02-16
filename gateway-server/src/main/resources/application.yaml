@@ -1,7 +1,46 @@
+#spring:
+#  application:
+#    name: gateway-server
+#  cloud:
+#    config:
+#      enabled: true
+#      uri: http://localhost:8081
+
+server:
+  port: 8080
+
 spring:
   application:
     name: gateway-server
-  cloud:
-    config:
-      enabled: true
-      uri: http://localhost:8081
+
+    cloud:
+      gateway:
+        discovery:
+          locator:
+            enabled: true
+            lower-case-service-id: true
+            strip-prefix: true
+        routes:
+          - id: microservice-user
+            uri: lb://microservice-user
+            predicates:
+              - Path=/user/**
+          - id: microservice-car
+            uri: lb://microservice-car
+            predicates:
+              - Path=/car/**
+          - id: microservice-motorcycle
+            uri: lb://microservice-motorcycle
+            predicates:
+              - Path=/motorcycle/**
+  config:
+    import: optional:configserver:http://localhost:8081
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+      register-with-eureka: true
+      fetch-registry: true
