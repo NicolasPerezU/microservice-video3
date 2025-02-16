@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "microservice-motorcycle", url = "http://localhost:8003")
+@FeignClient(name = "microservice-motorcycle")
 public interface MotorcycleClient {
 
     @PostMapping("/motorcycle")
