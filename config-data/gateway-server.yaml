@@ -10,3 +10,24 @@ eureka:
     instance:
       hostname: localhost
 
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: microservice-user
+          uri: lb://microservice-user
+          predicates:
+            - Path=/user/**
+        - id: microservice-car
+          uri: lb://microservice-car
+          predicates:
+            - Path=/car/**
+        - id: microservice-motorcycle
+          uri: lb://microservice-motorcycle
+          predicates:
+            - Path=/motorcycle/**
+          
+
