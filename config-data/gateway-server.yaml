@@ -24,7 +24,7 @@ spring:
           predicates:
             - Path=/user/**
           filters:
-            -RemoveRequestHeader=Cookie
+            - RemoveRequestHeader=Cookie
         - id: microservice-car
           uri: lb://microservice-car
           predicates:

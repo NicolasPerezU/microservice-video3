@@ -22,7 +22,7 @@ public class UserSecurity {
                 .oauth2ResourceServer(oauth2 ->
                         oauth2.jwt(Customizer.withDefaults())
                 )
-                
+
                 .csrf(csrf -> csrf.disable());
 
         return http.build();
