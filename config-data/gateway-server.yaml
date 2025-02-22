@@ -21,6 +21,8 @@ spring:
           uri: lb://microservice-user
           predicates:
             - Path=/user/**
+          filters:
+            -AuthFilter
         - id: microservice-car
           uri: lb://microservice-car
           predicates:
