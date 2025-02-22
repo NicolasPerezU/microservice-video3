@@ -6,10 +6,7 @@ import com.nicolas.microservice_auth.entity.AuthUser;
 import com.nicolas.microservice_auth.service.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -30,7 +27,7 @@ public class AuthUserController {
 
 
     @PostMapping("/validate")
-    public ResponseEntity<TokenDTO> validateToken(@RequestBody String token){
+    public ResponseEntity<TokenDTO> validateToken(@RequestParam String token){
         TokenDTO tokenDTO = authUserService.validateToken(token);
         if(tokenDTO == null){
             return ResponseEntity.badRequest().build();
