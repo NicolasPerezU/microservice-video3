@@ -15,5 +15,6 @@ spring:
       ddl-auto: update
 
 jwt:
-  secret: secret
+  secret: 5hJ6V1KfN1xJ7TpQW8f3L9XzKbUeR0O2
+
 

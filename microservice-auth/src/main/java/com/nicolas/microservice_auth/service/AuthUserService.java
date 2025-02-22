@@ -41,7 +41,7 @@ public class AuthUserService {
 
     public TokenDTO login(AuthUserDTO authUserDTO){
         Optional<AuthUser> user = authUserRepository.findByUsername(authUserDTO.getUsername());
-        if(user.isPresent()){
+        if(!user.isPresent()){
             return null;
         }
         if (passwordEncoder.matches(authUserDTO.getPassword(), user.get().getPassword())){
