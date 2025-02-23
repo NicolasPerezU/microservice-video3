@@ -1,5 +1,6 @@
 package com.nicolas.gateway_server.config;
 
+import com.nicolas.gateway_server.dto.RequestDto;
 import com.nicolas.gateway_server.dto.TokenDTO;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -38,6 +39,9 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
             return webClientBuilder.build()
                     .post()
                     .uri("http://microservice-auth/auth/validate?token=" + hunks[1])
+                    .bodyValue(new RequestDto(exchange.getRequest().getURI().getPath().toString(),
+                            exchange.getRequest().getMethod().toString()))
+
                     .retrieve()
                     .bodyToMono(TokenDTO.class)
                     .flatMap(t -> {

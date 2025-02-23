@@ -1,9 +1,12 @@
 package com.nicolas.microservice_auth.security;
 
+import com.nicolas.microservice_auth.dto.RequestDTO;
 import com.nicolas.microservice_auth.entity.AuthUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
+import org.apache.coyote.Request;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +21,10 @@ public class JwtProvider {
     @Value("${jwt.secret}")
     private String secret;
 
+
+    @Autowired
+    RouteValidate routeValidate;
+
     @PostConstruct
     protected void init(){
         secret = Base64.getEncoder().encodeToString(secret.getBytes());
@@ -27,6 +34,7 @@ public class JwtProvider {
         Map<String, Object> claims = new HashMap<>();
         claims.put("sub", authUser.getUsername());
         claims.put("id", authUser.getId());
+        claims.put("role", authUser.getRole());
 
         Date now = new Date();
         Date exp = new Date(now.getTime() + 3600000);
@@ -41,13 +49,34 @@ public class JwtProvider {
 
 
 
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token, RequestDTO dto) {
         try {
             Jwts.parser()
                     .setSigningKey(secret)
                     .build() // Necesario en la nueva versión
                     .parseClaimsJws(token);
-            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+
+        if (!isAdmin(token) && routeValidate.isAdminPath(dto)) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    public boolean isAdmin(String token) {
+        try {
+            return Jwts.parser()
+                    .setSigningKey(secret)
+                    .build() // Importante en jjwt 0.11.x
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .get("role")
+                    .equals("admin");
         } catch (Exception e) {
             return false;
         }

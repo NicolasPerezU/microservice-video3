@@ -17,4 +17,16 @@ spring:
 jwt:
   secret: E54791C31B99A58F25677B21FAECD57AB89CDEF1234567890ABCDEF12345678
 
+admin-paths:
+    paths:
+      -
+        uri: "/user"
+        method: "POST"
 
+      -
+        uri: "/user/saveCar/{1}[1-9]+[0-9]*"
+        method: "POST"
+
+      -
+        uri: "/user/saveMotorcycle/{1}[1-9]+[0-9]*"
+        method: "POST"

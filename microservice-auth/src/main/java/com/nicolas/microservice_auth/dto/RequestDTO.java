@@ -1,0 +1,16 @@
+package com.nicolas.microservice_auth.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class RequestDTO {
+
+    private String uri;
+    private String method;
+}

@@ -1,6 +1,8 @@
 package com.nicolas.microservice_auth.controller;
 
 import com.nicolas.microservice_auth.dto.AuthUserDTO;
+import com.nicolas.microservice_auth.dto.NewUserDto;
+import com.nicolas.microservice_auth.dto.RequestDTO;
 import com.nicolas.microservice_auth.dto.TokenDTO;
 import com.nicolas.microservice_auth.entity.AuthUser;
 import com.nicolas.microservice_auth.service.AuthUserService;
@@ -27,8 +29,8 @@ public class AuthUserController {
 
 
     @PostMapping("/validate")
-    public ResponseEntity<TokenDTO> validateToken(@RequestParam String token){
-        TokenDTO tokenDTO = authUserService.validateToken(token);
+    public ResponseEntity<TokenDTO> validateToken(@RequestParam String token, @RequestBody RequestDTO dto){
+        TokenDTO tokenDTO = authUserService.validateToken(token,dto);
         if(tokenDTO == null){
             return ResponseEntity.badRequest().build();
         }
@@ -37,8 +39,8 @@ public class AuthUserController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<AuthUser> createUser(@RequestBody AuthUserDTO authUserDTO){
-        AuthUser user = authUserService.saveUser(authUserDTO);
+    public ResponseEntity<AuthUser> createUser(@RequestBody NewUserDto DTO){
+        AuthUser user = authUserService.saveUser(DTO);
         if(user == null){
             return ResponseEntity.badRequest().build();
         }
