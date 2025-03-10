@@ -6,11 +6,8 @@ spring:
     config:
       server:
         git:
-<<<<<<< HEAD
-          default-label: auth-jwt-role
-=======
           default-label: keycloak
->>>>>>> 7b88a6cac44b5414da848f55bf439471c467697e
+
           uri: https://github.com/NicolasPerezU/microservice-video3
           search-paths: config-data
 
