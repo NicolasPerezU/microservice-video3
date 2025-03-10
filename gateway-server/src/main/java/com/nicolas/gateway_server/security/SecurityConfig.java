@@ -19,8 +19,4 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .build();
     }
-
-
-
-
 }
