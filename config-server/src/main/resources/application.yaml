@@ -7,7 +7,6 @@ spring:
       server:
         git:
           default-label: keycloak
-
           uri: https://github.com/NicolasPerezU/microservice-video3
           search-paths: config-data
 

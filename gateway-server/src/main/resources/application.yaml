@@ -44,3 +44,23 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
       register-with-eureka: true
       fetch-registry: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/tutorial-realm
+      client:
+        provider:
+          keycloak:
+            authorization-uri: http://localhost:9090/realms/tutorial-realm/protocol/openid-connect/auth
+            userinfo-uri: http://localhost:9090/realms/tutorial-realm/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
+            token-uri: http://localhost:9090/realms/tutorial-realm/protocol/openid-connect/token
+        registration:
+          tutorial-client:
+            provider: keycloak
+            client-id: tutorial-client
+            client-secret: lKnpDRnowbfEgjt4CqlElDC7Q5iDBRv9
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/tutorial-client
