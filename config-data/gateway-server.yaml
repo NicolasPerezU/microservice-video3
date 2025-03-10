@@ -13,6 +13,8 @@ eureka:
 spring:
   cloud:
     gateway:
+      default-filters:
+        - TokenRelay
       discovery:
         locator:
           enabled: true
@@ -22,7 +24,11 @@ spring:
           predicates:
             - Path=/user/**
           filters:
+<<<<<<< HEAD
             - AuthFilter
+=======
+            - RemoveRequestHeader=Cookie
+>>>>>>> 7b88a6cac44b5414da848f55bf439471c467697e
         - id: microservice-car
           uri: lb://microservice-car
           predicates:
@@ -31,9 +37,28 @@ spring:
           uri: lb://microservice-motorcycle
           predicates:
             - Path=/motorcycle/**
+<<<<<<< HEAD
         - id: microservice-auth
           uri: lb://microservice-auth
           predicates:
             - Path=/auth/**
+=======
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            authorization-uri: http://localhost:8180/realms/practica-realm/protocol/openid-connect/auth
+            userinfo-uri: http://localhost:8180/realms/practica-realm/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
+            token-uri: http://localhost:8180/realms/practica-realm/protocol/openid-connect/token
+        registration:
+          practica-cliente:
+            provider: keycloak
+            client-id: practica-cliente
+            client-secret: Qz7eXBRzjY6kDbAFkTglpVWBYopPh0Ej
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/practica-cliente"
+>>>>>>> 7b88a6cac44b5414da848f55bf439471c467697e
           
 
